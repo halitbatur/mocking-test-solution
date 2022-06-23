@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const sendEmail = require("../utils/email")
 
 const ServiceRequestModel = require("../models/serviceRequest");
 
@@ -14,10 +15,11 @@ router.get("/", async (req, res) => {
 // If the service request is completed successfully, we will send a confirmation email to the customer
 router.post("/", async (req, res) => {
     const newServiceRequestData = req.body;
+    const {email,customerName} = req.body;
     try {
         const newServiceRequest = await ServiceRequestModel.create(newServiceRequestData);
         if (newServiceRequest) {
-            // Call your email util function here to send an email to the customer
+            sendEmail({ email, customerName})
         }
         res.status(201).json(newServiceRequest);
     } catch(err) {
