@@ -13,15 +13,16 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const mailOptions = {
-    from:"halitfuatbatur@gmail.com",
-    to:"halit@re-coded.com",
-    subject:"NODE MAILER",
-    html:"<h1> oh hello there</h1>"
-}
+const sendEmail = async (userDetails) => {
+
+    const mailOptions = {
+        from:"halitfuatbatur@gmail.com",
+        to:userDetails.sendEmail,
+        subject:"NODE MAILER",
+        html:`<h1> oh hello ${userDetails.customerName}</h1>`
+    }
 
 
-const sendEmail = async (mailOptions) => {
     await transporter.sendMail(mailOptions, (err,data) => {
         if(err){
             console.log("Error" + err)
